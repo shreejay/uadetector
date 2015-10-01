@@ -10,7 +10,7 @@ JETTY_RUNNER="target/dependency/jetty-runner.jar"
 
 WAR_FILE="target/uadetector-hello-world*.war"   
 
-JAVA_OPTIONS="-Xms512M -Xmx512M -DSTOP.PORT=8079 -DSTOP.KEY=mustard 
+JAVA_OPTIONS="-Xms256M -Xmx256M -DSTOP.PORT=8079 -DSTOP.KEY=mustard 
 -Djetty.port=8080   
 -Xloggc:/var/log/uadetector_GC.log -XX:+PrintGCTimeStamps -XX:+PrintGCDetails   
 -XX:+PrintTenuringDistribution
