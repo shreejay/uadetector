@@ -27,6 +27,9 @@ import net.sf.uadetector.ReadableUserAgent;
 import net.sf.uadetector.UserAgentStringParser;
 import net.sf.uadetector.service.UADetectorServiceFactory;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 public class HelloServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -39,24 +42,47 @@ public class HelloServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
+		response.setContentType("application/json");
 		response.setStatus(HttpServletResponse.SC_OK);
 
+		
 		PrintWriter out = response.getWriter();
-		out.println("<h1>Hello Servlet</h1>");
-		out.println("session=" + request.getSession(true).getId());
-		out.println("<br>");
-		out.println("<br>");
 
 		// Get an UserAgentStringParser and analyze the requesting client
 		UserAgentStringParser parser = UADetectorServiceFactory.getOnlineUpdatingParser();
-		ReadableUserAgent agent = parser.parse(request.getHeader("User-Agent"));
-
-		out.append("You're a <em>");
-		out.append(agent.getName());
-		out.append("</em> on <em>");
-		out.append(agent.getOperatingSystem().getName());
-		out.append("</em>!");
+		if(parser != null){
+			//ReadableUserAgent agent = parser.parse(request.getHeader("User-Agent"));
+			request.getQueryString();
+			String userAgent = "Default String Values to prevent Quality Check from crapping out";
+			userAgent = request.getParameter("user_agent");
+			if(userAgent != null){
+				ReadableUserAgent agent = parser.parse(userAgent);
+							
+				JSONObject obj = new JSONObject();
+				obj.put("DeviceType", agent.getDeviceCategory().getCategory().getName());
+				obj.put("OperatingSystem", agent.getOperatingSystem().getName());
+				obj.put("Browser", agent.getFamily().getName());
+				
+				String browserVersion = "";
+				if(agent.getVersionNumber().getGroups().size() > 0){
+					browserVersion = concatStringsWSep(agent.getVersionNumber().getGroups(), ".");
+				}
+				obj.put("Browser Version",browserVersion);
+				
+				out.print(obj);
+				out.flush();
+			}
+		}
+	}
+	
+	public static String concatStringsWSep(Iterable<String> strings, String separator) {
+	    StringBuilder sb = new StringBuilder();
+	    String sep = "";
+	    for(String s: strings) {
+	        sb.append(sep).append(s);
+	        sep = separator;
+	    }
+	    return sb.toString();                           
 	}
 
 }
