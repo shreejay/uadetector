@@ -67,7 +67,7 @@ public class HelloServlet extends HttpServlet {
 				if(agent.getVersionNumber().getGroups().size() > 0){
 					browserVersion = concatStringsWSep(agent.getVersionNumber().getGroups(), ".");
 				}
-				obj.put("Browser Version",browserVersion);
+				obj.put("BrowserVersion",browserVersion);
 				
 				out.print(obj);
 				out.flush();
