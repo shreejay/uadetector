@@ -59,7 +59,8 @@ public class HelloServlet extends HttpServlet {
 				ReadableUserAgent agent = parser.parse(userAgent);
 							
 				JSONObject obj = new JSONObject();
-				obj.put("DeviceType", agent.getDeviceCategory().getCategory().getName());
+				obj.put("DeviceType", 1);
+				obj.put("DeviceTypeName", agent.getDeviceCategory().getCategory().getName());
 				obj.put("OperatingSystem", agent.getOperatingSystem().getName());
 				obj.put("Browser", agent.getFamily().getName());
 				
