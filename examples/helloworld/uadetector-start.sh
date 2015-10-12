@@ -11,7 +11,7 @@ JETTY_RUNNER="target/dependency/jetty-runner.jar"
 WAR_FILE="target/uadetector-hello-world*.war"   
 
 JAVA_OPTIONS="-Xms256m -Xmx256m -DSTOP.PORT=8079 -DSTOP.KEY=mustard 
--Djetty.port=8080   
+-Djetty.port=80   
 -Xloggc:/var/log/uadetector_GC.log -XX:+PrintGCTimeStamps -XX:+PrintGCDetails   
 -XX:+PrintTenuringDistribution
 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log 
